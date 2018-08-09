@@ -60,24 +60,29 @@ def startMenu():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     gameLoop()
+                if event.key == pygame.K_c:
+                    help_menu()
                     
         GAME_DISPLAY.fill(WHITE)
         
         show_text_middle('Flappyish Bird', MENU_LARGE_FONT, 200, BLACK)
         show_text_middle('Press SPACE to Play!', MENU_SMALL_FONT, 275, BLACK)
+        show_text_middle('Or C for controls', MENU_SUPER_SMALL_FONT, 350, BLACK)
+
         pygame.display.update()
 
 #DEATH MENU
 def death_menu(score, new_high_score):
-    while True:
-         
+    while True:  
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_p:
                     gameLoop()
+                if event.key == pygame.K_c:
+                    help_menu()
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     quit()
@@ -89,12 +94,35 @@ def death_menu(score, new_high_score):
         
         show_text_middle('YOU DIED!', MENU_LARGE_FONT, 175, RED)
         show_text_middle('Score: ' + str(score) + '', MENU_LARGE_FONT, 250, BLACK)
-        show_text_middle('Press SPACE to Play Again!', MENU_SMALL_FONT, 325, BLACK)     
-        show_text_middle('Or ESC to Quit', MENU_SUPER_SMALL_FONT, 375, BLACK)
+        show_text_middle('Press \'p\' to Play Again!', MENU_SMALL_FONT, 325, BLACK)     
+        show_text_middle('Press C for controls, or ESC to Quit', MENU_SUPER_SMALL_FONT, 375, BLACK)
         GAME_DISPLAY.blit(DEAD_BIRD_IMAGE, (125, 425))
         
         pygame.display.update()
-         
+
+#HELP MENU
+def help_menu():
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    gameLoop()
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    quit()
+
+        GAME_DISPLAY.fill(WHITE)
+    
+        show_text_middle('CONTROLS', MENU_LARGE_FONT, 100, GREEN)
+        show_text_middle('All you have to do is', MENU_SMALL_FONT, 225, BLACK)
+        show_text_middle('Press SPACE to flap your wings!', MENU_SMALL_FONT, 250, BLACK)
+        show_text_middle('Press \'p\' to Play!', MENU_SMALL_FONT, 325, BLACK)     
+        show_text_middle('Or ESC to Quit', MENU_SUPER_SMALL_FONT, 375, BLACK)
+
+        pygame.display.update()
          
 #DRAWS BIRD 
 def draw_bird(x, y, vel):
