@@ -15,18 +15,18 @@ GAME_RECT = GAME_DISPLAY.get_rect()
 pygame.display.set_caption('Flappyish Bird')
 
 #IMPORTS BIRD AND MAKES ITS VARIABLES
-ORIGINAL_BIRD_IMAGE = pygame.image.load('res\ird.png')
+ORIGINAL_BIRD_IMAGE = pygame.image.load('res/bird.png')
 BIRD_WIDTH = 41
 BIRD_HEIGHT = 41
 
 #IMPORTS BASE AND MAKES ITS VARIABLES
-BASE_IMAGE = pygame.image.load('res\ground.png')
+BASE_IMAGE = pygame.image.load('res/ground.png')
 BASE_HEIGHT = DISPLAY_HEIGHT * .1
 
 #IMPORT SKY AND DEAD BIRD
-SKY_IMAGE = pygame.image.load('res\sky.png')
+SKY_IMAGE = pygame.image.load('res/sky.png')
 SKY_IMAGE_RECT = SKY_IMAGE.get_rect()
-DEAD_BIRD_IMAGE = pygame.image.load('res\dead_bird.png')
+DEAD_BIRD_IMAGE = pygame.image.load('res/dead_bird.png')
 
 #MAKES PIPES VARIABLES
 PIPE_WIDTH = 65
