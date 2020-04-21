@@ -52,7 +52,8 @@ high_score = 0
 
 #START MENU
 def startMenu():
-    while True:   
+    print('in start menu')
+    while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -62,9 +63,9 @@ def startMenu():
                     gameLoop()
                 if event.key == pygame.K_c:
                     help_menu()
-                    
+
         GAME_DISPLAY.fill(WHITE)
-        
+
         show_text_middle('Flappyish Bird', MENU_LARGE_FONT, 200, BLACK)
         show_text_middle('Press SPACE to Play!', MENU_SMALL_FONT, 275, BLACK)
         show_text_middle('Or C for controls', MENU_SUPER_SMALL_FONT, 350, BLACK)
@@ -73,7 +74,7 @@ def startMenu():
 
 #DEATH MENU
 def death_menu(score, new_high_score):
-    while True:  
+    while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -86,18 +87,18 @@ def death_menu(score, new_high_score):
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     quit()
-                
+
         GAME_DISPLAY.fill(WHITE)
-        
+
         if new_high_score:
             show_text_middle('NEW HIGH SCORE OF ' + str(score) + '!', MENU_SMALL_FONT, 100, PIPE_GREEN)
-        
+
         show_text_middle('YOU DIED!', MENU_LARGE_FONT, 175, RED)
         show_text_middle('Score: ' + str(score) + '', MENU_LARGE_FONT, 250, BLACK)
-        show_text_middle('Press \'p\' to Play Again!', MENU_SMALL_FONT, 325, BLACK)     
+        show_text_middle('Press \'p\' to Play Again!', MENU_SMALL_FONT, 325, BLACK)
         show_text_middle('Press C for controls, or ESC to Quit', MENU_SUPER_SMALL_FONT, 375, BLACK)
         GAME_DISPLAY.blit(DEAD_BIRD_IMAGE, (125, 425))
-        
+
         pygame.display.update()
 
 #HELP MENU
@@ -115,35 +116,35 @@ def help_menu():
                     quit()
 
         GAME_DISPLAY.fill(WHITE)
-    
+
         show_text_middle('CONTROLS', MENU_LARGE_FONT, 100, GREEN)
         show_text_middle('All you have to do is', MENU_SMALL_FONT, 225, BLACK)
         show_text_middle('Press SPACE to flap your wings!', MENU_SMALL_FONT, 250, BLACK)
-        show_text_middle('Press \'p\' to Play!', MENU_SMALL_FONT, 325, BLACK)     
+        show_text_middle('Press \'p\' to Play!', MENU_SMALL_FONT, 325, BLACK)
         show_text_middle('Or ESC to Quit', MENU_SUPER_SMALL_FONT, 375, BLACK)
 
         pygame.display.update()
-         
-#DRAWS BIRD 
+
+#DRAWS BIRD
 def draw_bird(x, y, vel):
     xchange = -PIPE_SPEED;
     ychange = -vel
     rad = math.atan2(ychange, xchange)
     deg = math.degrees(rad)
-    
+
     if deg > 60:
         deg = 60
     if deg < -60:
         deg = -60
-    
+
     temp_image = pygame.transform.rotate(ORIGINAL_BIRD_IMAGE, deg)
     GAME_DISPLAY.blit(temp_image, (x, y))
-    
+
 #DRAWS PIPE
 def draw_pipe(x, y_top):
     pygame.draw.rect(GAME_DISPLAY, PIPE_GREEN, (x, 0, PIPE_WIDTH, y_top))
     pygame.draw.rect(GAME_DISPLAY, PIPE_GREEN, (x, y_top + PIPE_GAP, PIPE_WIDTH, DISPLAY_HEIGHT - (y_top + PIPE_GAP + BASE_HEIGHT / 2)))
-    
+
 #RETURN SURFACE AND RECT OF TEXT GIVEN TEXT, FONT, AND COLOR
 def text_object(text, font, color):
     text_surface = font.render(text, True, color)
@@ -161,9 +162,9 @@ def show_text_middle(text, font, y, color):
 
 #RUNS GAME
 def gameLoop():
-    
+
     global high_score
-    
+
     frame_counter = 0
     pipe_counter = 0
     pipes = []
@@ -173,7 +174,7 @@ def gameLoop():
 
     x = 20
     y = DISPLAY_HEIGHT / 2 - BIRD_HEIGHT / 2
-    
+
     while True:
 
         #MAKES PIPES EVERY 90 FRAMES
@@ -193,14 +194,14 @@ def gameLoop():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     velocity = -17
- 
+
         #COUNTS PIPES PASSED
         for pipe in pipes:
             if pipe['x'] + PIPE_WIDTH < x:
                 if not pipe['counted']:
                     pipe_counter += 1
                     pipe['counted'] = True
- 
+
         #UPDATES BIRD POS
         velocity += gravity
         y += velocity
@@ -208,7 +209,7 @@ def gameLoop():
         #UPDATES PIPES POS
         for pipe in pipes:
             pipe['x'] += PIPE_SPEED
-            
+
         #MAX SPEED
         if (velocity > 10):
             velocity = 10
@@ -234,7 +235,7 @@ def gameLoop():
                         death_menu(pipe_counter, True)
                     else:
                         death_menu(pipe_counter, False)
-        
+
         #CHECKS IF PIPE IS OFF SCREEN
         for pipe in pipes:
             if pipe['x'] + PIPE_WIDTH < 0:
@@ -243,14 +244,14 @@ def gameLoop():
         #CLEARS SCREEN AND DRAWS OBJECTS TO SCREEN
         GAME_DISPLAY.blit(SKY_IMAGE, (0, 0))
         GAME_DISPLAY.blit(BASE_IMAGE, (0, DISPLAY_HEIGHT - BASE_HEIGHT))
-        
+
         draw_bird(x, y, velocity)
 
         for pipe in pipes:
             draw_pipe(pipe['x'], pipe['y'])
 
         show_score(str(pipe_counter))
-    
+
         #UPDATES, TICKS, COUNTS FRAME
         pygame.display.update()
         clock.tick(60)
